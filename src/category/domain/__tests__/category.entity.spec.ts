@@ -206,4 +206,33 @@ describe("Category Validator", () => {
       });
     });
   });
+
+  describe("update method", () => {
+    it("should not update with invalid name", () => {
+      const category = Category.create({ name: "test" });
+      expect(() => category.update(null, "")).containsErrorMessages({
+        name: [
+          "name should not be empty",
+          "name must be a string",
+          "name must be shorter than or equal to 255 characters",
+        ],
+      });
+    });
+
+    it("should not update with empty name", () => {
+      const category = Category.create({ name: "test" });
+      expect(() => category.update("", "")).containsErrorMessages({
+        name: ["name should not be empty"],
+      });
+    });
+
+    it("should update a category", () => {
+      const nameUpdated = "test2";
+      const description = "description";
+      const category = Category.create({ name: "test" });
+      category.update(nameUpdated, description);
+      expect(category.name).toBe(nameUpdated);
+      expect(category.description).toBe(description);
+    });
+  });
 });
