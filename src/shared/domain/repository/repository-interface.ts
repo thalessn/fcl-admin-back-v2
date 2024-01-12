@@ -1,5 +1,5 @@
-import { Entity } from "./entity";
-import { ValueObject } from "./value-objects";
+import { Entity } from "../entity";
+import { ValueObject } from "../value-objects";
 
 export interface IRepository<E extends Entity, EntityId extends ValueObject> {
   insert(entity: E): Promise<void>;
