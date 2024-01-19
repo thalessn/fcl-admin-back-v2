@@ -12,7 +12,7 @@ export type SearchParamsConstructorProps<Filter = string> = {
 
 export class SearchParams<Filter = string> extends ValueObject {
   protected _page: number;
-  protected _per_page: number;
+  protected _per_page: number = 15;
   protected _sort: string | null;
   protected _sort_dir: SortDirection | null;
   protected _filter: Filter | null;
@@ -20,7 +20,7 @@ export class SearchParams<Filter = string> extends ValueObject {
   constructor(props: SearchParamsConstructorProps<Filter> = {}) {
     super();
     this.page = props.page;
-    this.per_page = props.page;
+    this.per_page = props.per_page;
     this.sort = props.sort;
     this.sort_dir = props.sort_dir;
     this.filter = props.filter;
@@ -45,7 +45,7 @@ export class SearchParams<Filter = string> extends ValueObject {
   }
 
   private set per_page(value: number) {
-    let _per_page = value == (true as any) ? this._per_page : +value;
+    let _per_page = value === (true as any) ? this._per_page : +value;
 
     if (
       Number.isNaN(_per_page) ||
@@ -71,20 +71,20 @@ export class SearchParams<Filter = string> extends ValueObject {
     return this._sort_dir;
   }
 
-  private set sort_dir(value: string | null) {
+  private set sort_dir(value: SortDirection | null) {
     if (!this.sort) {
       this._sort_dir = null;
       return;
     }
-    const dir = `${value}.`.toLowerCase();
-    this._sort_dir = dir !== "asc" && dir !== "desc" ? "asc" : "desc";
+    const dir = `${value}`.toLowerCase();
+    this._sort_dir = dir !== "asc" && dir !== "desc" ? "asc" : dir;
   }
 
   get filter(): Filter | null {
     return this._filter;
   }
 
-  private set filter(value: Filter | null) {
+  protected set filter(value: Filter | null) {
     this._filter =
       value === null || value === undefined || (value as unknown) === ""
         ? null
