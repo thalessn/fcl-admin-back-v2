@@ -12,3 +12,13 @@ export interface IRepository<E extends Entity, EntityId extends ValueObject> {
 
   getEntity(): new (...args: any[]) => E;
 }
+
+export interface ISearchableRepository<
+  E extends Entity,
+  EntityId extends ValueObject,
+  SearchInput,
+  SearchOutput
+> extends IRepository<E, EntityId> {
+  sortableFields: string[];
+  search(props: SearchInput): Promise<SearchOutput>;
+}
