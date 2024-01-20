@@ -117,7 +117,10 @@ export abstract class InMemorySearchableRepository<
       //@ts-ignore
       const aValue = custom_getter ? custom_getter(sort, a) : a[sort];
       //@ts-ignore
-      const bValue = custom_getter(sort, b) ? custom_getter(sort, b) : b[sort];
+      const bValue = custom_getter ? custom_getter(sort, b) : b[sort];
+      if (aValue < bValue) {
+        return sort_dir === "asc" ? -1 : 1;
+      }
 
       if (aValue > bValue) {
         return sort_dir === "asc" ? 1 : -1;
