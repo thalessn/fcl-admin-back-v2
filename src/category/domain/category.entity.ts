@@ -3,6 +3,7 @@ import { Uuid } from "../../shared/domain/value-objects/uuid.vo";
 import { EntityValidationError } from "../../shared/domain/validators/validation.error";
 import { CategoryValidatorFactory } from "./category.validator";
 import { Entity } from "../../shared/domain/entity";
+import { CategoryFakeBuilder } from "./category-fake.builder";
 
 export type CategoryConstructorProps = {
   category_id?: Uuid;
@@ -36,6 +37,10 @@ export class Category extends Entity {
 
   get entity_id(): ValueObject {
     return this.category_id;
+  }
+
+  static fake() {
+    return CategoryFakeBuilder;
   }
 
   toJSON() {
