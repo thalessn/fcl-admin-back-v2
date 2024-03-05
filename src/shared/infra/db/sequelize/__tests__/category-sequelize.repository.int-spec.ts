@@ -11,19 +11,14 @@ import {
 } from "../../../../../category/domain/category.repository";
 import { SearchResult } from "../../../../domain/repository/search-result";
 import { SearchParams } from "../../../../domain/repository/search-params";
+import { setupSequelize } from "../../../testing/helpers";
 
 describe("Category Sequelize Repository Integration Tests", () => {
-  let sequelize: Sequelize;
+  setupSequelize({ models: [CategoryModel] });
+
   let repository: CategorySequelizeRepository;
 
   beforeEach(async () => {
-    sequelize = new Sequelize({
-      dialect: "sqlite",
-      storage: ":memory:",
-      models: [CategoryModel],
-      logging: false,
-    });
-    await sequelize.sync({ force: true });
     repository = new CategorySequelizeRepository(CategoryModel);
   });
 
