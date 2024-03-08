@@ -10,7 +10,8 @@ export class UpdateCategoryUseCase
   constructor(private readonly categoryRepo: ICategoryRepository) {}
 
   async execute(input: UpdateCategoryInput): Promise<UpdateCategoryOutput> {
-    const entity = await this.categoryRepo.findById(new Uuid(input.id));
+    const id = new Uuid(input.id);
+    const entity = await this.categoryRepo.findById(id);
 
     if (!entity) {
       throw new NotFoundError(input.id, Category);
