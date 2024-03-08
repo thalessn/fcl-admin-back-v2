@@ -1,8 +1,9 @@
-import { IUseCase } from "../../shared/application/use-case.interface";
-import { NotFoundError } from "../../shared/domain/errors/not-found.error";
-import { Uuid } from "../../shared/domain/value-objects/uuid.vo";
-import { Category } from "../domain/category.entity";
-import { ICategoryRepository } from "../domain/category.repository";
+import { IUseCase } from "../../../shared/application/use-case.interface";
+import { NotFoundError } from "../../../shared/domain/errors/not-found.error";
+import { Uuid } from "../../../shared/domain/value-objects/uuid.vo";
+import { Category } from "../../domain/category.entity";
+import { ICategoryRepository } from "../../domain/category.repository";
+import { CategoryOutput } from "./common/category-output";
 
 export class GetCategoryUsecase
   implements IUseCase<GetCategoryInput, GetCategoryOutput>
@@ -31,10 +32,4 @@ export type GetCategoryInput = {
   id: string;
 };
 
-export type GetCategoryOutput = {
-  id: string;
-  name: string;
-  description: string | null;
-  is_active: boolean;
-  created_at: Date;
-};
+export type GetCategoryOutput = CategoryOutput;

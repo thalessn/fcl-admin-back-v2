@@ -1,26 +1,29 @@
-import { Entity } from "../../../../shared/domain/entity";
-import { NotFoundError } from "../../../../shared/domain/errors/not-found.error";
+import { NotFoundError } from "../../../../../shared/domain/errors/not-found.error";
 import {
   InvalidUuidError,
   Uuid,
-} from "../../../../shared/domain/value-objects/uuid.vo";
-import { Category } from "../../../domain/category.entity";
-import { CategoryInMemoryRepository } from "../../../infra/category-in-memory.repository";
+} from "../../../../../shared/domain/value-objects/uuid.vo";
+import { CategorySequelizeRepository } from "../../../../../shared/infra/db/sequelize/category-sequelize.repository";
+import { CategoryModel } from "../../../../../shared/infra/db/sequelize/category.model";
+import { setupSequelize } from "../../../../../shared/infra/testing/helpers";
+import { Category } from "../../../../domain/category.entity";
 import { UpdateCategoryUseCase } from "../../update-category.use-case";
 
-describe("Update Category Use Case Unit Tests", () => {
-  let repository: CategoryInMemoryRepository;
+describe("Update Category UseCase Integration Tests", () => {
+  let repository: CategorySequelizeRepository;
   let usecase: UpdateCategoryUseCase;
 
+  setupSequelize({ models: [CategoryModel] });
+
   beforeEach(() => {
-    repository = new CategoryInMemoryRepository();
+    repository = new CategorySequelizeRepository(CategoryModel);
     usecase = new UpdateCategoryUseCase(repository);
   });
 
-  it("should throw an error if entity not found", async () => {
-    await expect(
-      usecase.execute({ id: "fake_id", name: "test" })
-    ).rejects.toThrow(new InvalidUuidError());
+  it("should throw an error when entity not found", async () => {
+    await expect(usecase.execute({ id: "fake_id" })).rejects.toThrow(
+      new InvalidUuidError()
+    );
 
     const uuid = new Uuid();
     await expect(
@@ -30,14 +33,12 @@ describe("Update Category Use Case Unit Tests", () => {
 
   it("should insert a category", async () => {
     const category = new Category({ name: "Test" });
-    const spyUpdate = jest.spyOn(repository, "update");
-    repository.items = [category];
+    await repository.insert(category);
 
     let output = await usecase.execute({
       id: category.category_id.id,
       name: "TEST",
     });
-    expect(spyUpdate).toHaveBeenCalledTimes(1);
     expect(output).toStrictEqual({
       id: category.category_id.id,
       name: "TEST",

@@ -1,10 +1,10 @@
-import { NotFoundError } from "../../../../shared/domain/errors/not-found.error";
+import { NotFoundError } from "../../../../../shared/domain/errors/not-found.error";
 import {
   InvalidUuidError,
   Uuid,
-} from "../../../../shared/domain/value-objects/uuid.vo";
-import { Category } from "../../../domain/category.entity";
-import { CategoryInMemoryRepository } from "../../../infra/category-in-memory.repository";
+} from "../../../../../shared/domain/value-objects/uuid.vo";
+import { Category } from "../../../../domain/category.entity";
+import { CategoryInMemoryRepository } from "../../../../infra/category-in-memory.repository";
 import { GetCategoryUsecase } from "../../get-category.use-case";
 
 describe("Get Category Use Case Unit Test", () => {
@@ -33,9 +33,11 @@ describe("Get Category Use Case Unit Test", () => {
     const category = Category.fake().aCategory().build();
     repository.items = [category];
 
-    const categoryFound = await repository.findById(category.category_id);
+    const categoryFound = await usecase.execute({
+      id: category.category_id.id,
+    });
     expect(categoryFound).toStrictEqual({
-      id: repository.items[0].category_id,
+      id: repository.items[0].category_id.id,
       name: repository.items[0].name,
       description: repository.items[0].description,
       is_active: repository.items[0].is_active,
