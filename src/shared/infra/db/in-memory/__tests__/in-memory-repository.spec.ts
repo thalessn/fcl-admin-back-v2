@@ -89,7 +89,7 @@ describe("InMemoryRepository Unit Tests", () => {
   it("should throws error on update when entity not found", async () => {
     const entity = new StubEntity({ name: "Thales", price: 5 });
     await expect(repo.update(entity)).rejects.toThrow(
-      new NotFoundError(entity.entity_id, StubEntity)
+      new NotFoundError(entity.entity_id.id, StubEntity)
     );
   });
 
@@ -107,7 +107,7 @@ describe("InMemoryRepository Unit Tests", () => {
 
   it("should throw error on delete when entity not found", async () => {
     const entity = new StubEntity({ name: "Test", price: 5 });
-    await expect(repo.delete(entity)).rejects.toThrow(
+    await expect(repo.delete(entity.entity_id)).rejects.toThrow(
       new NotFoundError(entity.entity_id, StubEntity)
     );
   });
@@ -116,7 +116,7 @@ describe("InMemoryRepository Unit Tests", () => {
     const entity = new StubEntity({ name: "Test", price: 5 });
     await repo.insert(entity);
 
-    await repo.delete(entity);
+    await repo.delete(entity.entity_id);
     expect(repo.items).toStrictEqual([]);
     expect(repo.items.length).toBe(0);
   });
