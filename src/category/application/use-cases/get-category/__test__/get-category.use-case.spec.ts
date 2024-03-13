@@ -5,7 +5,7 @@ import {
 } from "../../../../../shared/domain/value-objects/uuid.vo";
 import { Category } from "../../../../domain/category.entity";
 import { CategoryInMemoryRepository } from "../../../../infra/category-in-memory.repository";
-import { GetCategoryUsecase } from "../../get-category.use-case";
+import { GetCategoryUsecase } from "../get-category.use-case";
 
 describe("Get Category Use Case Unit Test", () => {
   let repository: CategoryInMemoryRepository;
