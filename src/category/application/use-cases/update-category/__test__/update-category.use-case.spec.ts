@@ -6,7 +6,7 @@ import {
 } from "../../../../../shared/domain/value-objects/uuid.vo";
 import { Category } from "../../../../domain/category.entity";
 import { CategoryInMemoryRepository } from "../../../../infra/category-in-memory.repository";
-import { UpdateCategoryUseCase } from "../../update-category.use-case";
+import { UpdateCategoryUseCase } from "../update-category.use-case";
 
 describe("Update Category Use Case Unit Tests", () => {
   let repository: CategoryInMemoryRepository;
@@ -26,6 +26,17 @@ describe("Update Category Use Case Unit Tests", () => {
     await expect(
       usecase.execute({ id: uuid.id, name: "test" })
     ).rejects.toThrow(new NotFoundError(uuid.id, Category));
+  });
+
+  it("should throw an error when entity is not valid", async () => {
+    const entity = new Category({ name: "Movie" });
+    repository.items = [entity];
+    await expect(() =>
+      usecase.execute({
+        id: entity.category_id.id,
+        name: "t".repeat(256),
+      })
+    ).rejects.toThrowError("Entity Validation Error");
   });
 
   it("should insert a category", async () => {

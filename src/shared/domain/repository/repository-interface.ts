@@ -1,5 +1,5 @@
 import { Entity } from "../entity";
-import { ValueObject } from "../value-objects";
+import { ValueObject } from "../value-object";
 import { SearchParams } from "./search-params";
 import { SearchResult } from "./search-result";
 
