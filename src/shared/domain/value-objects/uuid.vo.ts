@@ -1,4 +1,4 @@
-import { ValueObject } from "../value-objects";
+import { ValueObject } from "../value-object";
 import { v4 as uuidv4, validate as uuidValidate } from "uuid";
 
 export class Uuid extends ValueObject {

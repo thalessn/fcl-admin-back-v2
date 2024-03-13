@@ -9,7 +9,7 @@ import {
   SortDirection,
 } from "../../../domain/repository/search-params";
 import { SearchResult } from "../../../domain/repository/search-result";
-import { ValueObject } from "../../../domain/value-objects";
+import { ValueObject } from "../../../domain/value-object";
 
 export abstract class InMemoryRepository<
   E extends Entity,
