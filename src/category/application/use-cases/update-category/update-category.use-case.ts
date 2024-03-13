@@ -5,6 +5,7 @@ import { Uuid } from "../../../../shared/domain/value-objects/uuid.vo";
 import { Category } from "../../../domain/category.entity";
 import { ICategoryRepository } from "../../../domain/category.repository";
 import { CategoryOutput } from "../common/category-output";
+import { UpdateCategoryInput } from "./update-category-input";
 
 export class UpdateCategoryUseCase
   implements IUseCase<UpdateCategoryInput, UpdateCategoryOutput>
@@ -47,12 +48,5 @@ export class UpdateCategoryUseCase
     };
   }
 }
-
-export type UpdateCategoryInput = {
-  id: string;
-  name?: string;
-  description?: string | null;
-  is_active?: boolean | null;
-};
 
 export type UpdateCategoryOutput = CategoryOutput;
