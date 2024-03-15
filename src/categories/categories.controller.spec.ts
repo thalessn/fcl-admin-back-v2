@@ -1,12 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CategoriesController } from './categories.controller';
+import { DatabaseModule } from '../database/database.module';
+import { CategoriesModule } from './categories.module';
 
 describe('CategoriesController', () => {
   let controller: CategoriesController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [CategoriesController],
+      imports: [DatabaseModule, CategoriesModule],
     }).compile();
 
     controller = module.get<CategoriesController>(CategoriesController);
