@@ -9,7 +9,7 @@ import {
 export type CreateCategoryInputConstructorProps = {
   name: string;
   description?: string | null;
-  is_active: boolean;
+  is_active?: boolean;
 };
 
 export class CreateCategoryInput {
@@ -23,9 +23,9 @@ export class CreateCategoryInput {
 
   @IsBoolean()
   @IsOptional()
-  is_active: boolean;
+  is_active?: boolean;
 
-  contructor(props: CreateCategoryInputConstructorProps) {
+  constructor(props: CreateCategoryInputConstructorProps) {
     if (!props) return;
     this.name = props.name;
     this.description = props.description;
