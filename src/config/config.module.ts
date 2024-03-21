@@ -28,7 +28,7 @@ export const CONFIG_DB_SCHEMA: Joi.StrictSchemaMap<DB_SCHEMA_TYPE> = {
     is: 'mysql',
     then: Joi.required(),
   }),
-  DB_PASSWORD: Joi.string().when('DB_HOST', {
+  DB_PASSWORD: Joi.string().when('DB_VENDOR', {
     is: 'mysql',
     then: Joi.required(),
   }),
@@ -39,6 +39,8 @@ export const CONFIG_DB_SCHEMA: Joi.StrictSchemaMap<DB_SCHEMA_TYPE> = {
   DB_LOGGING: Joi.boolean().required(),
   DB_AUTO_LOAD_MODELS: Joi.boolean().required(),
 };
+
+export type CONFIG_SCHEMA_TYPE = DB_SCHEMA_TYPE;
 
 @Module({})
 export class ConfigModule extends NestConfigModule {
@@ -51,10 +53,10 @@ export class ConfigModule extends NestConfigModule {
         join(process.cwd(), 'envs', `.env.${process.env.NODE_ENV}`),
         join(process.cwd(), 'envs', `.env`),
       ],
-      ...otherOptions,
       validationSchema: Joi.object({
         ...CONFIG_DB_SCHEMA,
       }),
+      ...otherOptions,
     });
   }
 }
