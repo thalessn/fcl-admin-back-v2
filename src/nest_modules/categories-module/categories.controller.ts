@@ -28,30 +28,29 @@ import { SearchCategoriesDto } from './dto/search-categories.dto';
 @Controller('categories')
 export class CategoriesController {
   @Inject(CreateCategoryUseCase)
-  private createCategoryUseCase: CreateCategoryUseCase;
+  private createUseCase: CreateCategoryUseCase;
 
   @Inject(UpdateCategoryUseCase)
-  private updateCategoryUseCase: UpdateCategoryUseCase;
+  private updateUseCase: UpdateCategoryUseCase;
 
   @Inject(ListCategoriesUseCase)
-  private listCategoriesUseCase: ListCategoriesUseCase;
+  private listUseCase: ListCategoriesUseCase;
 
   @Inject(DeleteCategoryUsecase)
-  private deleteCategoryUseCase: DeleteCategoryUsecase;
+  private deleteUseCase: DeleteCategoryUsecase;
 
   @Inject(GetCategoryUsecase)
-  private getCategoryUseCase: GetCategoryUsecase;
+  private getUseCase: GetCategoryUsecase;
 
   @Post()
   async create(@Body() createCategoryDto: CreateCategoryDto) {
-    const output = await this.createCategoryUseCase.execute(createCategoryDto);
+    const output = await this.createUseCase.execute(createCategoryDto);
     return CategoriesController.serialize(output);
   }
 
   @Get()
   async search(@Query() searchCategoriesDto: SearchCategoriesDto) {
-    const output =
-      await this.listCategoriesUseCase.execute(searchCategoriesDto);
+    const output = await this.listUseCase.execute(searchCategoriesDto);
     return new CategoryCollectionPresenter(output);
   }
 
@@ -59,7 +58,7 @@ export class CategoriesController {
   async findOne(
     @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
   ) {
-    const output = await this.getCategoryUseCase.execute({ id });
+    const output = await this.getUseCase.execute({ id });
     return CategoriesController.serialize(output);
   }
 
@@ -68,7 +67,7 @@ export class CategoriesController {
     @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
   ) {
-    const output = await this.updateCategoryUseCase.execute({
+    const output = await this.updateUseCase.execute({
       ...updateCategoryDto,
       id,
     });
@@ -80,7 +79,7 @@ export class CategoriesController {
   remove(
     @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
   ) {
-    return this.deleteCategoryUseCase.execute({ id });
+    return this.deleteUseCase.execute({ id });
   }
 
   static serialize(output: CategoryOutput) {
