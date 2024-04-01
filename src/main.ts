@@ -2,7 +2,7 @@ import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { WrapperDataInterceptor } from './nest_modules/shared-module/interceptors/wrapper-data/wrapper-data.interceptor';
-import { NotFoundErrorFilter } from './nest_modules/shared-module/not-found-error/not-found-error.filter';
+import { NotFoundErrorFilter } from './nest_modules/shared-module/filters/not-found-error.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
