@@ -6,6 +6,7 @@ import {
 import { Reflector } from '@nestjs/core';
 import { NotFoundErrorFilter } from './shared-module/filters/not-found-error.filter';
 import { WrapperDataInterceptor } from './shared-module/interceptors/wrapper-data/wrapper-data.interceptor';
+import { EntityValidationErrorFilter } from './shared-module/filters/entity-validation-error.filter';
 
 export function applyGlobalConfig(app: INestApplication) {
   app.useGlobalPipes(
@@ -19,5 +20,8 @@ export function applyGlobalConfig(app: INestApplication) {
     new ClassSerializerInterceptor(app.get(Reflector)),
     new WrapperDataInterceptor(),
   );
-  app.useGlobalFilters(new NotFoundErrorFilter());
+  app.useGlobalFilters(
+    new NotFoundErrorFilter(),
+    new EntityValidationErrorFilter(),
+  );
 }
