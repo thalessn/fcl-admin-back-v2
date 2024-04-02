@@ -220,9 +220,13 @@ const config: Config = {
   coveragePathIgnorePatterns: [
     '/node_modules/',
     '-interface.ts',
+    '.interface.ts',
     '.d.ts',
     'validator-rules.ts',
     'shared/testing',
+    'shared-module/testing',
+    '.input.ts',
+    'fixtures.ts',
   ],
   coverageProvider: 'v8',
   coverageThreshold: {
