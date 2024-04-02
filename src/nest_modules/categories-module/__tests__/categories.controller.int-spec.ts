@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ICategoryRepository } from '../../../core/category/domain/category.repository';
 import { CategoriesController } from '../categories.controller';
-import { ConfigModule } from 'src/nest_modules/config-module/config.module';
-import { DatabaseModule } from 'src/nest_modules/database-module/database.module';
+import { ConfigModule } from '../../config-module/config.module';
+import { DatabaseModule } from '../../database-module/database.module';
 import { CategoriesModule } from '../categories.module';
 import { CATEGORY_PROVIDERS } from '../categories.providers';
-import { CreateCategoryUseCase } from 'src/core/category/application/use-cases/create-category/create-category.use-case';
-import { UpdateCategoryUseCase } from 'src/core/category/application/use-cases/update-category/update-category.use-case';
-import { ListCategoriesUseCase } from 'src/core/category/application/use-cases/list-category/list-categories.use-case';
-import { GetCategoryUsecase } from 'src/core/category/application/use-cases/get-category/get-category.use-case';
-import { DeleteCategoryUsecase } from 'src/core/category/application/use-cases/delete-category/delete-category.usecase';
+import { CreateCategoryUseCase } from '../../../core/category/application/use-cases/create-category/create-category.use-case';
+import { UpdateCategoryUseCase } from '../../../core/category/application/use-cases/update-category/update-category.use-case';
+import { ListCategoriesUseCase } from '../../../core/category/application/use-cases/list-category/list-categories.use-case';
+import { GetCategoryUsecase } from '../../../core/category/application/use-cases/get-category/get-category.use-case';
+import { DeleteCategoryUsecase } from '../../../core/category/application/use-cases/delete-category/delete-category.usecase';
 import {
   CreateCategoryFixture,
   ListCategoriesFixture,
@@ -19,9 +19,9 @@ import {
   CategoryCollectionPresenter,
   CategoryPresenter,
 } from '../categories.presenter';
-import { CategoryOutputMapper } from 'src/core/category/application/use-cases/common/category-output';
-import { Uuid } from 'src/core/shared/domain/value-objects/uuid.vo';
-import { Category } from 'src/core/category/domain/category.entity';
+import { CategoryOutputMapper } from '../../../core/category/application/use-cases/common/category-output';
+import { Uuid } from '../../../core/shared/domain/value-objects/uuid.vo';
+import { Category } from '../../../core/category/domain/category.entity';
 
 describe('Categories Controller Integration Tests', () => {
   let controller: CategoriesController;

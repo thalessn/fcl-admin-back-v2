@@ -6,7 +6,7 @@ import { Category } from '../../src/core/category/domain/category.entity';
 import { CategoriesController } from '../../src/nest_modules/categories-module/categories.controller';
 import { GetCategoryFixture } from '../../src/nest_modules/categories-module/testing/category-fixtures';
 import { startApp } from '../../src/nest_modules/shared-module/testing/helpers';
-import { CATEGORY_PROVIDERS } from 'src/nest_modules/categories-module/categories.providers';
+import { CATEGORY_PROVIDERS } from '../../src/nest_modules/categories-module/categories.providers';
 
 describe('CategoriesController (e2e)', () => {
   const appHelper = startApp();

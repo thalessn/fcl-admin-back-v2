@@ -2,8 +2,8 @@ import { INestApplication } from '@nestjs/common';
 import { getConnectionToken } from '@nestjs/sequelize';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Sequelize } from 'sequelize-typescript';
-import { AppModule } from 'src/app.module';
-import { applyGlobalConfig } from 'src/nest_modules/global-config';
+import { AppModule } from '../../../app.module';
+import { applyGlobalConfig } from '../../../nest_modules/global-config';
 
 export function startApp() {
   let _app: INestApplication;

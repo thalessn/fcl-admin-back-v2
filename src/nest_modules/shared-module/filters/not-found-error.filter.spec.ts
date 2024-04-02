@@ -1,7 +1,7 @@
-import { Entity } from 'src/core/shared/domain/entity';
+import { Entity } from '../../../core/shared/domain/entity';
 import { NotFoundErrorFilter } from './not-found-error.filter';
 import { Controller, Get, INestApplication } from '@nestjs/common';
-import { NotFoundError } from 'src/core/shared/domain/errors/not-found.error';
+import { NotFoundError } from '../../../core/shared/domain/errors/not-found.error';
 import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
 

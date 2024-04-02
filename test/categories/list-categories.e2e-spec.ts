@@ -5,7 +5,7 @@ import { CategoryOutputMapper } from '../../src/core/category/application/use-ca
 import { CategoriesController } from '../../src/nest_modules/categories-module/categories.controller';
 import { ListCategoriesFixture } from '../../src/nest_modules/categories-module/testing/category-fixtures';
 import { startApp } from '../../src/nest_modules/shared-module/testing/helpers';
-import { CATEGORY_PROVIDERS } from 'src/nest_modules/categories-module/categories.providers';
+import { CATEGORY_PROVIDERS } from '../../src/nest_modules/categories-module/categories.providers';
 
 describe('CategoriesController (e2e)', () => {
   describe('/categories (GET)', () => {

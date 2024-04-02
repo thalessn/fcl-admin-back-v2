@@ -1,7 +1,7 @@
-import { Category } from 'src/core/category/domain/category.entity';
-import { ICategoryRepository } from 'src/core/category/domain/category.repository';
-import { CATEGORY_PROVIDERS } from 'src/nest_modules/categories-module/categories.providers';
-import { startApp } from 'src/nest_modules/shared-module/testing/helpers';
+import { Category } from '../../src/core/category/domain/category.entity';
+import { ICategoryRepository } from '../../src/core/category/domain/category.repository';
+import { CATEGORY_PROVIDERS } from '../../src/nest_modules/categories-module/categories.providers';
+import { startApp } from '../../src/nest_modules/shared-module/testing/helpers';
 import request from 'supertest';
 
 describe('CategoriesController (e2e)', () => {

@@ -3,8 +3,8 @@ import { CreateCategoryUseCase } from '../../core/category/application/use-cases
 import { ListCategoriesUseCase } from '../../core/category/application/use-cases/list-category/list-categories.use-case';
 import { UpdateCategoryUseCase } from '../../core/category/application/use-cases/update-category/update-category.use-case';
 import { ICategoryRepository } from '../../core/category/domain/category.repository';
-import { GetCategoryUsecase } from 'src/core/category/application/use-cases/get-category/get-category.use-case';
-import { DeleteCategoryUsecase } from 'src/core/category/application/use-cases/delete-category/delete-category.usecase';
+import { GetCategoryUsecase } from '../../core/category/application/use-cases/get-category/get-category.use-case';
+import { DeleteCategoryUsecase } from '../../core/category/application/use-cases/delete-category/delete-category.usecase';
 import { CategoryInMemoryRepository } from '../../core/category/infra/category-in-memory.repository';
 import { CategorySequelizeRepository } from '../../core/shared/infra/db/sequelize/category-sequelize.repository';
 import { CategoryModel } from '../../core/shared/infra/db/sequelize/category.model';

@@ -9,7 +9,7 @@ import { NotFoundError } from '../../../domain/errors/not-found.error';
 import { Uuid } from '../../../domain/value-objects/uuid.vo';
 import { CategoryModel } from './category.model';
 import { CategoryModelMapper } from './category-model-mapper';
-import { SortDirection } from 'src/core/shared/domain/repository/search-params';
+import { SortDirection } from '../../../../shared/domain/repository/search-params';
 
 export class CategorySequelizeRepository implements ICategoryRepository {
   sortableFields: string[] = ['name', 'created_at'];

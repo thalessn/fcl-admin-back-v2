@@ -3,11 +3,11 @@ import { instanceToPlain } from 'class-transformer';
 import { ICategoryRepository } from '../../src/core/category/domain/category.repository';
 import { CategoryOutputMapper } from '../../src/core/category/application/use-cases/common/category-output';
 import { Uuid } from '../../src/core/shared/domain/value-objects/uuid.vo';
-import { Category } from 'src/core/category/domain/category.entity';
-import { CategoriesController } from 'src/nest_modules/categories-module/categories.controller';
-import { UpdateCategoryFixture } from 'src/nest_modules/categories-module/testing/category-fixtures';
-import { startApp } from 'src/nest_modules/shared-module/testing/helpers';
-import { CATEGORY_PROVIDERS } from 'src/nest_modules/categories-module/categories.providers';
+import { Category } from '../../src/core/category/domain/category.entity';
+import { CategoriesController } from '../../src/nest_modules/categories-module/categories.controller';
+import { UpdateCategoryFixture } from '../../src/nest_modules/categories-module/testing/category-fixtures';
+import { startApp } from '../../src/nest_modules/shared-module/testing/helpers';
+import { CATEGORY_PROVIDERS } from '../../src/nest_modules/categories-module/categories.providers';
 
 describe('CategoriesController (e2e)', () => {
   const uuid = '9366b7dc-2d71-4799-b91c-c64adb205104';
