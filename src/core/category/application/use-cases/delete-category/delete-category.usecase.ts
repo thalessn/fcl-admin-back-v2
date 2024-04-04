@@ -1,5 +1,5 @@
+import { CategoryId } from 'src/core/category/domain/category.aggregate';
 import { IUseCase } from '../../../../shared/application/use-case.interface';
-import { Uuid } from '../../../../shared/domain/value-objects/uuid.vo';
 import { ICategoryRepository } from '../../../domain/category.repository';
 
 export class DeleteCategoryUsecase
@@ -8,7 +8,7 @@ export class DeleteCategoryUsecase
   constructor(private categoryRepo: ICategoryRepository) {}
 
   async execute(input: DeleteCategoryInput): Promise<void> {
-    const uuid = new Uuid(input.id);
+    const uuid = new CategoryId(input.id);
     await this.categoryRepo.delete(uuid);
   }
 }

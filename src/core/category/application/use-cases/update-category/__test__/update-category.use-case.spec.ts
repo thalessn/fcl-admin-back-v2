@@ -1,9 +1,7 @@
+import { EntityValidationError } from 'src/core/shared/domain/validators/validation.error';
 import { NotFoundError } from '../../../../../shared/domain/errors/not-found.error';
-import {
-  InvalidUuidError,
-  Uuid,
-} from '../../../../../shared/domain/value-objects/uuid.vo';
-import { Category } from '../../../../domain/category.entity';
+import { InvalidUuidError } from '../../../../../shared/domain/value-objects/uuid.vo';
+import { Category, CategoryId } from '../../../../domain/category.aggregate';
 import { CategoryInMemoryRepository } from '../../../../infra/category-in-memory.repository';
 import { UpdateCategoryUseCase } from '../update-category.use-case';
 
@@ -21,7 +19,7 @@ describe('Update Category Use Case Unit Tests', () => {
       usecase.execute({ id: 'fake_id', name: 'test' }),
     ).rejects.toThrow(new InvalidUuidError());
 
-    const uuid = new Uuid();
+    const uuid = new CategoryId();
     await expect(
       usecase.execute({ id: uuid.id, name: 'test' }),
     ).rejects.toThrow(new NotFoundError(uuid.id, Category));
@@ -35,7 +33,7 @@ describe('Update Category Use Case Unit Tests', () => {
         id: entity.category_id.id,
         name: 't'.repeat(256),
       }),
-    ).rejects.toThrowError('Entity Validation Error');
+    ).rejects.toThrow(new EntityValidationError([]));
   });
 
   it('should insert a category', async () => {

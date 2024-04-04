@@ -1,9 +1,6 @@
 import { NotFoundError } from '../../../../../shared/domain/errors/not-found.error';
-import {
-  InvalidUuidError,
-  Uuid,
-} from '../../../../../shared/domain/value-objects/uuid.vo';
-import { Category } from '../../../../domain/category.entity';
+import { InvalidUuidError } from '../../../../../shared/domain/value-objects/uuid.vo';
+import { Category, CategoryId } from '../../../../domain/category.aggregate';
 import { CategoryInMemoryRepository } from '../../../../infra/category-in-memory.repository';
 import { DeleteCategoryUsecase } from '../delete-category.usecase';
 
@@ -21,7 +18,7 @@ describe('Delete Category Use Case Unit Tests', () => {
       new InvalidUuidError(),
     );
 
-    const uuid = new Uuid();
+    const uuid = new CategoryId();
 
     await expect(() => usecase.execute({ id: uuid.id })).rejects.toThrow(
       new NotFoundError(uuid.id, Category),

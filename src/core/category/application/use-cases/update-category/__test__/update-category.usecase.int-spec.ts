@@ -1,12 +1,9 @@
 import { NotFoundError } from '../../../../../shared/domain/errors/not-found.error';
-import {
-  InvalidUuidError,
-  Uuid,
-} from '../../../../../shared/domain/value-objects/uuid.vo';
+import { InvalidUuidError } from '../../../../../shared/domain/value-objects/uuid.vo';
 import { CategorySequelizeRepository } from '../../../../../shared/infra/db/sequelize/category-sequelize.repository';
 import { CategoryModel } from '../../../../../shared/infra/db/sequelize/category.model';
 import { setupSequelize } from '../../../../../shared/infra/testing/helpers';
-import { Category } from '../../../../domain/category.entity';
+import { Category, CategoryId } from '../../../../domain/category.aggregate';
 import { UpdateCategoryUseCase } from '../update-category.use-case';
 
 describe('Update Category UseCase Integration Tests', () => {
@@ -25,7 +22,7 @@ describe('Update Category UseCase Integration Tests', () => {
       new InvalidUuidError(),
     );
 
-    const uuid = new Uuid();
+    const uuid = new CategoryId();
     await expect(
       usecase.execute({ id: uuid.id, name: 'test' }),
     ).rejects.toThrow(new NotFoundError(uuid.id, Category));

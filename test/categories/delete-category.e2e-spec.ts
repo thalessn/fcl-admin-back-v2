@@ -1,4 +1,4 @@
-import { Category } from '../../src/core/category/domain/category.entity';
+import { Category } from '../../src/core/category/domain/category.aggregate';
 import { ICategoryRepository } from '../../src/core/category/domain/category.repository';
 import { CATEGORY_PROVIDERS } from '../../src/nest_modules/categories-module/categories.providers';
 import { startApp } from '../../src/nest_modules/shared-module/testing/helpers';

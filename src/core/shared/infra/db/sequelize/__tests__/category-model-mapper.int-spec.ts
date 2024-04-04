@@ -3,7 +3,7 @@ import { CategoryModel } from '../category.model';
 import { CategoryModelMapper } from '../category-model-mapper';
 import { EntityValidationError } from '../../../../domain/validators/validation.error';
 import { Uuid } from '../../../../domain/value-objects/uuid.vo';
-import { Category } from '../../../../../category/domain/category.entity';
+import { Category } from '../../../../../category/domain/category.aggregate';
 import { setupSequelize } from '../../../testing/helpers';
 
 describe('CategoryModelMapper Integration Test', () => {

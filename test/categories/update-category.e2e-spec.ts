@@ -2,8 +2,10 @@ import request from 'supertest';
 import { instanceToPlain } from 'class-transformer';
 import { ICategoryRepository } from '../../src/core/category/domain/category.repository';
 import { CategoryOutputMapper } from '../../src/core/category/application/use-cases/common/category-output';
-import { Uuid } from '../../src/core/shared/domain/value-objects/uuid.vo';
-import { Category } from '../../src/core/category/domain/category.entity';
+import {
+  Category,
+  CategoryId,
+} from '../../src/core/category/domain/category.aggregate';
 import { CategoriesController } from '../../src/nest_modules/categories-module/categories.controller';
 import { UpdateCategoryFixture } from '../../src/nest_modules/categories-module/testing/category-fixtures';
 import { startApp } from '../../src/nest_modules/shared-module/testing/helpers';
@@ -116,7 +118,9 @@ describe('CategoriesController (e2e)', () => {
           expect(Object.keys(res.body)).toStrictEqual(['data']);
           expect(Object.keys(res.body.data)).toStrictEqual(keyInResponse);
           const id = res.body.data.id;
-          const categoryUpdated = await categoryRepo.findById(new Uuid(id));
+          const categoryUpdated = await categoryRepo.findById(
+            new CategoryId(id),
+          );
           const presenter = CategoriesController.serialize(
             CategoryOutputMapper.toOutput(categoryUpdated!),
           );
