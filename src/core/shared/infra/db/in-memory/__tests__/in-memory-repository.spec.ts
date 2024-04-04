@@ -1,7 +1,7 @@
-import { Entity } from "../../../../domain/entity";
-import { NotFoundError } from "../../../../domain/errors/not-found.error";
-import { Uuid } from "../../../../domain/value-objects/uuid.vo";
-import { InMemoryRepository } from "../in-memory-repository";
+import { Entity } from '../../../../domain/entity';
+import { NotFoundError } from '../../../../domain/errors/not-found.error';
+import { Uuid } from '../../../../domain/value-objects/uuid.vo';
+import { InMemoryRepository } from '../in-memory-repository';
 
 type StubEntityConstructor = {
   entity_id?: Uuid;
@@ -36,17 +36,17 @@ class StubInMemoryRepository extends InMemoryRepository<StubEntity, Uuid> {
   }
 }
 
-describe("InMemoryRepository Unit Tests", () => {
+describe('InMemoryRepository Unit Tests', () => {
   let repo: StubInMemoryRepository;
 
   beforeEach(() => {
     repo = new StubInMemoryRepository();
   });
 
-  test("should insert a new entity", async () => {
+  test('should insert a new entity', async () => {
     const entity = new StubEntity({
       entity_id: new Uuid(),
-      name: "Test",
+      name: 'Test',
       price: 100,
     });
 
@@ -56,16 +56,16 @@ describe("InMemoryRepository Unit Tests", () => {
     expect(repo.items[0]).toBe(entity);
   });
 
-  test("should bulk insert entities", async () => {
+  test('should bulk insert entities', async () => {
     const entity = new StubEntity({
       entity_id: new Uuid(),
-      name: "Test",
+      name: 'Test',
       price: 100,
     });
 
     const entity2 = new StubEntity({
       entity_id: new Uuid(),
-      name: "Test2",
+      name: 'Test2',
       price: 200,
     });
 
@@ -77,8 +77,8 @@ describe("InMemoryRepository Unit Tests", () => {
     expect(repo.items[1]).toBe(entity2);
   });
 
-  it("should returns all entities", async () => {
-    const entity = new StubEntity({ name: "Test", price: 5 });
+  it('should returns all entities', async () => {
+    const entity = new StubEntity({ name: 'Test', price: 5 });
     await repo.insert(entity);
 
     const entities = await repo.findAll();
@@ -86,18 +86,18 @@ describe("InMemoryRepository Unit Tests", () => {
     expect(entities).toStrictEqual([entity]);
   });
 
-  it("should throws error on update when entity not found", async () => {
-    const entity = new StubEntity({ name: "Thales", price: 5 });
+  it('should throws error on update when entity not found', async () => {
+    const entity = new StubEntity({ name: 'Thales', price: 5 });
     await expect(repo.update(entity)).rejects.toThrow(
-      new NotFoundError(entity.entity_id.id, StubEntity)
+      new NotFoundError(entity.entity_id.id, StubEntity),
     );
   });
 
-  it("should update an entity", async () => {
-    const entity = new StubEntity({ name: "Test", price: 5 });
+  it('should update an entity', async () => {
+    const entity = new StubEntity({ name: 'Test', price: 5 });
     await repo.insert(entity);
 
-    entity.name = "NovoNome";
+    entity.name = 'NovoNome';
     entity.price = 10;
 
     await repo.update(entity);
@@ -105,15 +105,15 @@ describe("InMemoryRepository Unit Tests", () => {
     expect(updatedEntity).toBe(entity);
   });
 
-  it("should throw error on delete when entity not found", async () => {
-    const entity = new StubEntity({ name: "Test", price: 5 });
+  it('should throw error on delete when entity not found', async () => {
+    const entity = new StubEntity({ name: 'Test', price: 5 });
     await expect(repo.delete(entity.entity_id)).rejects.toThrow(
-      new NotFoundError(entity.entity_id, StubEntity)
+      new NotFoundError(entity.entity_id, StubEntity),
     );
   });
 
-  it("should delete an entity", async () => {
-    const entity = new StubEntity({ name: "Test", price: 5 });
+  it('should delete an entity', async () => {
+    const entity = new StubEntity({ name: 'Test', price: 5 });
     await repo.insert(entity);
 
     await repo.delete(entity.entity_id);

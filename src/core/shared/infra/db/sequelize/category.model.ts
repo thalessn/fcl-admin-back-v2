@@ -4,9 +4,9 @@ import {
   Model,
   PrimaryKey,
   Table,
-} from "sequelize-typescript";
+} from 'sequelize-typescript';
 
-@Table({ tableName: "categories", timestamps: false })
+@Table({ tableName: 'categories', timestamps: false })
 export class CategoryModel extends Model {
   @PrimaryKey
   @Column({ type: DataType.UUID })
