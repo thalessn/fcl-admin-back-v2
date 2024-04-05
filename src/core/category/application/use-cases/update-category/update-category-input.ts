@@ -31,10 +31,13 @@ export class UpdateCategoryInput {
   is_active?: boolean;
 
   constructor(props?: UpdateCategoryConstructorProps) {
+    if (!props) return;
     this.id = props.id;
-    this.name = props.name;
-    this.description = props.description;
-    this.is_active = props.is_active;
+    props.name && (this.name = props.name);
+    props.description && (this.description = props.description);
+    props.is_active !== null &&
+      props.is_active !== undefined &&
+      (this.is_active = props.is_active);
   }
 }
 

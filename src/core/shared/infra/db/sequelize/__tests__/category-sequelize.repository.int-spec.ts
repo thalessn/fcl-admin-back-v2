@@ -5,7 +5,7 @@ import {
   CategoryId,
 } from '../../../../../category/domain/category.aggregate';
 import { NotFoundError } from '../../../../domain/errors/not-found.error';
-import { CategoryModelMapper } from '../category-model-mapper';
+import { CategoryModelMapper } from '../../../../../category/infra/db/sequelize/category-model-mapper';
 import {
   CategorySearchParams,
   CategorySearchResult,
@@ -28,7 +28,7 @@ describe('Category Sequelize Repository Integration Tests', () => {
     await repository.insert(category);
 
     const model = await CategoryModel.findByPk(category.category_id.id);
-    expect(model.toJSON()).toMatchObject({
+    expect(model!.toJSON()).toMatchObject({
       category_id: category.category_id.id,
       name: category.name,
       description: category.description,
@@ -45,7 +45,7 @@ describe('Category Sequelize Repository Integration Tests', () => {
     repository.insert(category);
 
     modelFound = await repository.findById(category.category_id);
-    expect(modelFound.toJSON()).toMatchObject(category.toJSON());
+    expect(modelFound!.toJSON()).toMatchObject(category.toJSON());
   });
 
   it('should return all categories', async () => {
@@ -65,8 +65,8 @@ describe('Category Sequelize Repository Integration Tests', () => {
     await repository.update(category);
 
     const updatedCategory = await repository.findById(category.category_id);
-    expect(updatedCategory.name).toBe(category.name);
-    expect(updatedCategory.toJSON()).toMatchObject(category.toJSON());
+    expect(updatedCategory!.name).toBe(category.name);
+    expect(updatedCategory!.toJSON()).toMatchObject(category.toJSON());
   });
 
   it('should throw a error on update when category not found', async () => {

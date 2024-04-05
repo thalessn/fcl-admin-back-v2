@@ -4,9 +4,9 @@ import { Uuid } from '../../../../domain/value-objects/uuid.vo';
 import { InMemoryRepository } from '../in-memory-repository';
 
 type StubEntityConstructor = {
-  entity_id?: Uuid;
+  entity_id?: Uuid | null;
   name: string;
-  price?: number;
+  price?: number | null;
 };
 
 class StubEntity extends Entity {
@@ -18,7 +18,7 @@ class StubEntity extends Entity {
     super();
     this.entity_id = props.entity_id || new Uuid();
     this.name = props.name;
-    this.price = props.price;
+    this.price = props.price!;
   }
 
   toJSON() {

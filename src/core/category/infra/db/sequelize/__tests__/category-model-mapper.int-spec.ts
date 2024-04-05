@@ -1,10 +1,8 @@
-import { Sequelize } from 'sequelize-typescript';
-import { CategoryModel } from '../category.model';
+import { CategoryModel } from '../../../../../shared/infra/db/sequelize/category.model';
 import { CategoryModelMapper } from '../category-model-mapper';
-import { EntityValidationError } from '../../../../domain/validators/validation.error';
-import { Uuid } from '../../../../domain/value-objects/uuid.vo';
-import { Category } from '../../../../../category/domain/category.aggregate';
-import { setupSequelize } from '../../../testing/helpers';
+import { LoadEntityError } from '../../../../../shared/domain/validators/validation.error';
+import { Category } from '../../../../domain/category.aggregate';
+import { setupSequelize } from '../../../../../shared/infra/testing/helpers';
 
 describe('CategoryModelMapper Integration Test', () => {
   setupSequelize({ models: [CategoryModel] });
@@ -18,10 +16,10 @@ describe('CategoryModelMapper Integration Test', () => {
 
     try {
       CategoryModelMapper.toEntity(model);
-      fail('The category is valid, but it needs throw a EntityValidationError');
+      fail('The category is valid, but it needs throw a LoadEntityError');
     } catch (e) {
-      expect(e).toBeInstanceOf(EntityValidationError);
-      expect((e as EntityValidationError).error).toMatchObject([
+      expect(e).toBeInstanceOf(LoadEntityError);
+      expect((e as LoadEntityError).error).toMatchObject([
         {
           name: ['name must be shorter than or equal to 255 characters'],
         },

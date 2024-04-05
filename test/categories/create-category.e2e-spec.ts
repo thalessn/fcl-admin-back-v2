@@ -70,7 +70,7 @@ describe('CategoriesController (e2e)', () => {
           const id = res.body.data.id;
           const categoryCreated = await repository.findById(new CategoryId(id));
           const presenter = CategoriesController.serialize(
-            CategoryOutputMapper.toOutput(categoryCreated),
+            CategoryOutputMapper.toOutput(categoryCreated!),
           );
 
           const serialized = instanceToPlain(presenter); // instanceToPlain (ClassTransformer)

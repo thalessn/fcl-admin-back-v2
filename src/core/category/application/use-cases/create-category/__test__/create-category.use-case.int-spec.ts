@@ -22,11 +22,11 @@ describe('Create Category Use Case Integration Tests', () => {
     let categoryInserted = await repository.findById(new CategoryId(output.id));
 
     expect(output).toStrictEqual({
-      id: categoryInserted.category_id.id,
-      name: categoryInserted.name,
+      id: categoryInserted!.category_id.id,
+      name: categoryInserted!.name,
       description: null,
       is_active: true,
-      created_at: categoryInserted.created_at,
+      created_at: categoryInserted!.created_at,
     });
 
     output = await usecase.execute({
@@ -36,11 +36,11 @@ describe('Create Category Use Case Integration Tests', () => {
     categoryInserted = await repository.findById(new CategoryId(output.id));
 
     expect(output).toStrictEqual({
-      id: categoryInserted.category_id.id,
+      id: categoryInserted!.category_id.id,
       name: 'test',
       description: 'test description',
       is_active: true,
-      created_at: categoryInserted.created_at,
+      created_at: categoryInserted!.created_at,
     });
 
     output = await usecase.execute({
@@ -51,11 +51,11 @@ describe('Create Category Use Case Integration Tests', () => {
     categoryInserted = await repository.findById(new CategoryId(output.id));
 
     expect(output).toStrictEqual({
-      id: categoryInserted.category_id.id,
+      id: categoryInserted!.category_id.id,
       name: 'test',
       description: 'test description',
       is_active: false,
-      created_at: categoryInserted.created_at,
+      created_at: categoryInserted!.created_at,
     });
 
     output = await usecase.execute({
@@ -65,11 +65,11 @@ describe('Create Category Use Case Integration Tests', () => {
     categoryInserted = await repository.findById(new CategoryId(output.id));
 
     expect(output).toStrictEqual({
-      id: categoryInserted.category_id.id,
+      id: categoryInserted!.category_id.id,
       name: 'test',
       description: null,
       is_active: false,
-      created_at: categoryInserted.created_at,
+      created_at: categoryInserted!.created_at,
     });
   });
 });

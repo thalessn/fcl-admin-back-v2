@@ -1,124 +1,168 @@
 import { NotFoundError } from '../../../../../shared/domain/errors/not-found.error';
-import { InvalidUuidError } from '../../../../../shared/domain/value-objects/uuid.vo';
 import { CategorySequelizeRepository } from '../../../../../shared/infra/db/sequelize/category-sequelize.repository';
 import { CategoryModel } from '../../../../../shared/infra/db/sequelize/category.model';
 import { setupSequelize } from '../../../../../shared/infra/testing/helpers';
 import { Category, CategoryId } from '../../../../domain/category.aggregate';
 import { UpdateCategoryUseCase } from '../update-category.use-case';
 
-describe('Update Category UseCase Integration Tests', () => {
+describe('UpdateCategoryUseCase Integration Tests', () => {
+  let useCase: UpdateCategoryUseCase;
   let repository: CategorySequelizeRepository;
-  let usecase: UpdateCategoryUseCase;
 
   setupSequelize({ models: [CategoryModel] });
 
   beforeEach(() => {
     repository = new CategorySequelizeRepository(CategoryModel);
-    usecase = new UpdateCategoryUseCase(repository);
+    useCase = new UpdateCategoryUseCase(repository);
   });
 
-  it('should throw an error when entity not found', async () => {
-    await expect(usecase.execute({ id: 'fake_id' })).rejects.toThrow(
-      new InvalidUuidError(),
-    );
-
-    const uuid = new CategoryId();
-    await expect(
-      usecase.execute({ id: uuid.id, name: 'test' }),
-    ).rejects.toThrow(new NotFoundError(uuid.id, Category));
+  it('should throws error when entity not found', async () => {
+    const categoryId = new CategoryId();
+    await expect(() =>
+      useCase.execute({ id: categoryId.id, name: 'fake' }),
+    ).rejects.toThrow(new NotFoundError(categoryId.id, Category));
   });
 
   it('should update a category', async () => {
-    const category = new Category({ name: 'Test' });
-    await repository.insert(category);
+    const entity = Category.fake().aCategory().build();
+    repository.insert(entity);
 
-    let output = await usecase.execute({
-      id: category.category_id.id,
-      name: 'TEST',
+    let output = await useCase.execute({
+      id: entity.category_id.id,
+      name: 'test',
     });
     expect(output).toStrictEqual({
-      id: category.category_id.id,
-      name: 'TEST',
-      description: null,
+      id: entity.category_id.id,
+      name: 'test',
+      description: entity.description,
       is_active: true,
-      created_at: category.created_at,
+      created_at: entity.created_at,
     });
 
     type Arrange = {
       input: {
         id: string;
         name: string;
-        description?: string | null;
-        is_active?: boolean | null;
+        description?: null | string;
+        is_active?: boolean;
       };
       expected: {
         id: string;
         name: string;
-        description: string | null;
+        description: null | string;
         is_active: boolean;
         created_at: Date;
       };
     };
-
     const arrange: Arrange[] = [
       {
         input: {
-          id: category.category_id.id,
+          id: entity.category_id.id,
           name: 'test',
           description: 'some description',
         },
         expected: {
-          id: category.category_id.id,
+          id: entity.category_id.id,
           name: 'test',
           description: 'some description',
           is_active: true,
-          created_at: category.created_at,
+          created_at: entity.created_at,
         },
       },
       {
         input: {
-          id: category.category_id.id,
+          id: entity.category_id.id,
           name: 'test',
-          is_active: false,
         },
         expected: {
-          id: category.category_id.id,
+          id: entity.category_id.id,
           name: 'test',
           description: 'some description',
-          is_active: false,
-          created_at: category.created_at,
+          is_active: true,
+          created_at: entity.created_at,
         },
       },
       {
         input: {
-          id: category.category_id.id,
+          id: entity.category_id.id,
           name: 'test',
-          description: 'new description',
+          is_active: false,
+        },
+        expected: {
+          id: entity.category_id.id,
+          name: 'test',
+          description: 'some description',
+          is_active: false,
+          created_at: entity.created_at,
+        },
+      },
+      {
+        input: {
+          id: entity.category_id.id,
+          name: 'test',
+        },
+        expected: {
+          id: entity.category_id.id,
+          name: 'test',
+          description: 'some description',
+          is_active: false,
+          created_at: entity.created_at,
+        },
+      },
+      {
+        input: {
+          id: entity.category_id.id,
+          name: 'test',
           is_active: true,
         },
         expected: {
-          id: category.category_id.id,
+          id: entity.category_id.id,
           name: 'test',
-          description: 'new description',
+          description: 'some description',
           is_active: true,
-          created_at: category.created_at,
+          created_at: entity.created_at,
+        },
+      },
+      {
+        input: {
+          id: entity.category_id.id,
+          name: 'test',
+          description: null,
+          is_active: false,
+        },
+        expected: {
+          id: entity.category_id.id,
+          name: 'test',
+          description: null,
+          is_active: false,
+          created_at: entity.created_at,
         },
       },
     ];
 
     for (const i of arrange) {
-      output = await usecase.execute({
+      output = await useCase.execute({
         id: i.input.id,
-        ...('name' in i.input && { name: i.input.name }),
+        ...(i.input.name && { name: i.input.name }),
         ...('description' in i.input && { description: i.input.description }),
         ...('is_active' in i.input && { is_active: i.input.is_active }),
       });
+      const entityUpdated = await repository.findById(
+        new CategoryId(i.input.id),
+      );
       expect(output).toStrictEqual({
-        id: category.category_id.id,
+        id: entity.category_id.id,
         name: i.expected.name,
         description: i.expected.description,
         is_active: i.expected.is_active,
-        created_at: i.expected.created_at,
+        created_at: entityUpdated!.created_at,
+      });
+      expect(entityUpdated!.toJSON()).toStrictEqual({
+        category_id: entity.category_id.id,
+        name: i.expected.name,
+        description: i.expected.description,
+        is_active: i.expected.is_active,
+        created_at: entityUpdated!.created_at,
       });
     }
   });
