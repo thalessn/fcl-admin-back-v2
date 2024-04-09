@@ -1,14 +1,14 @@
 import { Op, literal } from 'sequelize';
-import { Category } from '../../../../category/domain/category.aggregate';
+import { Category } from '../../../domain/category.aggregate';
 import {
   CategorySearchParams,
   CategorySearchResult,
   ICategoryRepository,
-} from '../../../../category/domain/category.repository';
-import { NotFoundError } from '../../../domain/errors/not-found.error';
-import { Uuid } from '../../../domain/value-objects/uuid.vo';
+} from '../../../domain/category.repository';
+import { NotFoundError } from '../../../../shared/domain/errors/not-found.error';
+import { Uuid } from '../../../../shared/domain/value-objects/uuid.vo';
 import { CategoryModel } from './category.model';
-import { CategoryModelMapper } from '../../../../category/infra/db/sequelize/category-model-mapper';
+import { CategoryModelMapper } from './category-model-mapper';
 import { SortDirection } from '../../../../shared/domain/repository/search-params';
 
 export class CategorySequelizeRepository implements ICategoryRepository {

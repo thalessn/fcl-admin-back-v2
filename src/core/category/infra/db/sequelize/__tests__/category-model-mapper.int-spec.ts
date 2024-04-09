@@ -1,4 +1,4 @@
-import { CategoryModel } from '../../../../../shared/infra/db/sequelize/category.model';
+import { CategoryModel } from '../category.model';
 import { CategoryModelMapper } from '../category-model-mapper';
 import { LoadEntityError } from '../../../../../shared/domain/validators/validation.error';
 import { Category } from '../../../../domain/category.aggregate';

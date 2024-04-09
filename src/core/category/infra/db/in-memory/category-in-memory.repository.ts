@@ -1,11 +1,11 @@
-import { SortDirection } from '../../shared/domain/repository/search-params';
-import { Uuid } from '../../shared/domain/value-objects/uuid.vo';
-import { InMemorySearchableRepository } from '../../shared/infra/db/in-memory/in-memory-repository';
-import { Category } from '../domain/category.aggregate';
+import { SortDirection } from '../../../../shared/domain/repository/search-params';
+import { Uuid } from '../../../../shared/domain/value-objects/uuid.vo';
+import { InMemorySearchableRepository } from '../../../../shared/infra/db/in-memory/in-memory-repository';
+import { Category } from '../../../domain/category.aggregate';
 import {
   CategoryFilter,
   ICategoryRepository,
-} from '../domain/category.repository';
+} from '../../../domain/category.repository';
 
 export class CategoryInMemoryRepository
   extends InMemorySearchableRepository<Category, Uuid>

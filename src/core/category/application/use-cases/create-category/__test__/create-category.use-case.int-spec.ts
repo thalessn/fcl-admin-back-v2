@@ -1,6 +1,6 @@
 import { CategoryId } from 'src/core/category/domain/category.aggregate';
-import { CategorySequelizeRepository } from '../../../../../shared/infra/db/sequelize/category-sequelize.repository';
-import { CategoryModel } from '../../../../../shared/infra/db/sequelize/category.model';
+import { CategorySequelizeRepository } from '../../../../infra/db/sequelize/category-sequelize.repository';
+import { CategoryModel } from '../../../../infra/db/sequelize/category.model';
 import { setupSequelize } from '../../../../../shared/infra/testing/helpers';
 import { CreateCategoryUseCase } from '../create-category.use-case';
 

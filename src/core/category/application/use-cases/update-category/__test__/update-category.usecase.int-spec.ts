@@ -1,6 +1,6 @@
 import { NotFoundError } from '../../../../../shared/domain/errors/not-found.error';
-import { CategorySequelizeRepository } from '../../../../../shared/infra/db/sequelize/category-sequelize.repository';
-import { CategoryModel } from '../../../../../shared/infra/db/sequelize/category.model';
+import { CategorySequelizeRepository } from '../../../../infra/db/sequelize/category-sequelize.repository';
+import { CategoryModel } from '../../../../infra/db/sequelize/category.model';
 import { setupSequelize } from '../../../../../shared/infra/testing/helpers';
 import { Category, CategoryId } from '../../../../domain/category.aggregate';
 import { UpdateCategoryUseCase } from '../update-category.use-case';

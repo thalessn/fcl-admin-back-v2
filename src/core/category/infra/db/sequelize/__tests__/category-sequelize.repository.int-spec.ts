@@ -1,18 +1,15 @@
 import { CategorySequelizeRepository } from '../category-sequelize.repository';
 import { CategoryModel } from '../category.model';
-import {
-  Category,
-  CategoryId,
-} from '../../../../../category/domain/category.aggregate';
-import { NotFoundError } from '../../../../domain/errors/not-found.error';
-import { CategoryModelMapper } from '../../../../../category/infra/db/sequelize/category-model-mapper';
+import { Category, CategoryId } from '../../../../domain/category.aggregate';
+import { NotFoundError } from '../../../../../shared/domain/errors/not-found.error';
+import { CategoryModelMapper } from '../category-model-mapper';
 import {
   CategorySearchParams,
   CategorySearchResult,
-} from '../../../../../category/domain/category.repository';
-import { SearchResult } from '../../../../domain/repository/search-result';
-import { SearchParams } from '../../../../domain/repository/search-params';
-import { setupSequelize } from '../../../testing/helpers';
+} from '../../../../domain/category.repository';
+import { SearchResult } from '../../../../../shared/domain/repository/search-result';
+import { SearchParams } from '../../../../../shared/domain/repository/search-params';
+import { setupSequelize } from '../../../../../shared/infra/testing/helpers';
 
 describe('Category Sequelize Repository Integration Tests', () => {
   setupSequelize({ models: [CategoryModel] });

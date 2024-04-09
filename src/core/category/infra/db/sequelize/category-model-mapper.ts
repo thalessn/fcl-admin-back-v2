@@ -1,5 +1,5 @@
 import { Category, CategoryId } from '../../../domain/category.aggregate';
-import { CategoryModel } from '../../../../shared/infra/db/sequelize/category.model';
+import { CategoryModel } from './category.model';
 import { LoadEntityError } from '../../../../shared/domain/validators/validation.error';
 
 export class CategoryModelMapper {

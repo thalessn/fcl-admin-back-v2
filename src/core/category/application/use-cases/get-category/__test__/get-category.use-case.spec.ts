@@ -1,7 +1,7 @@
 import { NotFoundError } from '../../../../../shared/domain/errors/not-found.error';
 import { InvalidUuidError } from '../../../../../shared/domain/value-objects/uuid.vo';
 import { Category, CategoryId } from '../../../../domain/category.aggregate';
-import { CategoryInMemoryRepository } from '../../../../infra/category-in-memory.repository';
+import { CategoryInMemoryRepository } from '../../../../infra/db/in-memory/category-in-memory.repository';
 import { GetCategoryUsecase } from '../get-category.use-case';
 
 describe('Get Category Use Case Unit Test', () => {
