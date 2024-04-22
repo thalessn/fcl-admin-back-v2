@@ -16,8 +16,8 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { CreateCategoryUseCase } from '../../core/category/application/use-cases/create-category/create-category.use-case';
 import { UpdateCategoryUseCase } from '../../core/category/application/use-cases/update-category/update-category.use-case';
 import { ListCategoriesUseCase } from '../../core/category/application/use-cases/list-category/list-categories.use-case';
-import { DeleteCategoryUsecase } from '../../core/category/application/use-cases/delete-category/delete-category.usecase';
-import { GetCategoryUsecase } from '../../core/category/application/use-cases/get-category/get-category.use-case';
+import { DeleteCategoryUseCase } from '../../core/category/application/use-cases/delete-category/delete-category.use-case';
+import { GetCategoryUseCase } from '../../core/category/application/use-cases/get-category/get-category.use-case';
 import {
   CategoryCollectionPresenter,
   CategoryPresenter,
@@ -36,11 +36,11 @@ export class CategoriesController {
   @Inject(ListCategoriesUseCase)
   private listUseCase: ListCategoriesUseCase;
 
-  @Inject(DeleteCategoryUsecase)
-  private deleteUseCase: DeleteCategoryUsecase;
+  @Inject(DeleteCategoryUseCase)
+  private deleteUseCase: DeleteCategoryUseCase;
 
-  @Inject(GetCategoryUsecase)
-  private getUseCase: GetCategoryUsecase;
+  @Inject(GetCategoryUseCase)
+  private getUseCase: GetCategoryUseCase;
 
   @Post()
   async create(@Body() createCategoryDto: CreateCategoryDto) {

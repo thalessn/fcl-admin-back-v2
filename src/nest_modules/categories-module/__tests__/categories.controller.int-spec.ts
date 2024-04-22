@@ -8,8 +8,8 @@ import { CATEGORY_PROVIDERS } from '../categories.providers';
 import { CreateCategoryUseCase } from '../../../core/category/application/use-cases/create-category/create-category.use-case';
 import { UpdateCategoryUseCase } from '../../../core/category/application/use-cases/update-category/update-category.use-case';
 import { ListCategoriesUseCase } from '../../../core/category/application/use-cases/list-category/list-categories.use-case';
-import { GetCategoryUsecase } from '../../../core/category/application/use-cases/get-category/get-category.use-case';
-import { DeleteCategoryUsecase } from '../../../core/category/application/use-cases/delete-category/delete-category.usecase';
+import { GetCategoryUseCase } from '../../../core/category/application/use-cases/get-category/get-category.use-case';
+import { DeleteCategoryUseCase } from '../../../core/category/application/use-cases/delete-category/delete-category.use-case';
 import {
   CreateCategoryFixture,
   ListCategoriesFixture,
@@ -44,8 +44,8 @@ describe('Categories Controller Integration Tests', () => {
     expect(controller['createUseCase']).toBeInstanceOf(CreateCategoryUseCase);
     expect(controller['updateUseCase']).toBeInstanceOf(UpdateCategoryUseCase);
     expect(controller['listUseCase']).toBeInstanceOf(ListCategoriesUseCase);
-    expect(controller['getUseCase']).toBeInstanceOf(GetCategoryUsecase);
-    expect(controller['deleteUseCase']).toBeInstanceOf(DeleteCategoryUsecase);
+    expect(controller['getUseCase']).toBeInstanceOf(GetCategoryUseCase);
+    expect(controller['deleteUseCase']).toBeInstanceOf(DeleteCategoryUseCase);
   });
 
   describe('should create a category', () => {
