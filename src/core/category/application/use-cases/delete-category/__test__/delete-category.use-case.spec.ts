@@ -2,15 +2,15 @@ import { NotFoundError } from '../../../../../shared/domain/errors/not-found.err
 import { InvalidUuidError } from '../../../../../shared/domain/value-objects/uuid.vo';
 import { Category, CategoryId } from '../../../../domain/category.aggregate';
 import { CategoryInMemoryRepository } from '../../../../infra/db/in-memory/category-in-memory.repository';
-import { DeleteCategoryUsecase } from '../delete-category.usecase';
+import { DeleteCategoryUseCase } from '../delete-category.use-case';
 
 describe('Delete Category Use Case Unit Tests', () => {
   let repository: CategoryInMemoryRepository;
-  let usecase: DeleteCategoryUsecase;
+  let usecase: DeleteCategoryUseCase;
 
   beforeEach(() => {
     repository = new CategoryInMemoryRepository();
-    usecase = new DeleteCategoryUsecase(repository);
+    usecase = new DeleteCategoryUseCase(repository);
   });
 
   it('should throw an error when entity not found', async () => {

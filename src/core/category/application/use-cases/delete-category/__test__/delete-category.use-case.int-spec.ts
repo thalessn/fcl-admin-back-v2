@@ -3,17 +3,17 @@ import { CategorySequelizeRepository } from '../../../../infra/db/sequelize/cate
 import { CategoryModel } from '../../../../infra/db/sequelize/category.model';
 import { setupSequelize } from '../../../../../shared/infra/testing/helpers';
 import { Category, CategoryId } from '../../../../domain/category.aggregate';
-import { DeleteCategoryUsecase } from '../delete-category.usecase';
+import { DeleteCategoryUseCase } from '../delete-category.use-case';
 
 describe('Delete Category Usecase Unit Tests', () => {
   let repository: CategorySequelizeRepository;
-  let usecase: DeleteCategoryUsecase;
+  let usecase: DeleteCategoryUseCase;
 
   setupSequelize({ models: [CategoryModel] });
 
   beforeEach(() => {
     repository = new CategorySequelizeRepository(CategoryModel);
-    usecase = new DeleteCategoryUsecase(repository);
+    usecase = new DeleteCategoryUseCase(repository);
   });
 
   it('should throw a error when category not found', async () => {

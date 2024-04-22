@@ -2,7 +2,7 @@ import { CategoryId } from 'src/core/category/domain/category.aggregate';
 import { IUseCase } from '../../../../shared/application/use-case.interface';
 import { ICategoryRepository } from '../../../domain/category.repository';
 
-export class DeleteCategoryUsecase
+export class DeleteCategoryUseCase
   implements IUseCase<DeleteCategoryInput, DeleteCategoryOutPut>
 {
   constructor(private categoryRepo: ICategoryRepository) {}
