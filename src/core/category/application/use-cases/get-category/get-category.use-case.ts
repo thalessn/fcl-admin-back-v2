@@ -4,7 +4,7 @@ import { Category, CategoryId } from '../../../domain/category.aggregate';
 import { ICategoryRepository } from '../../../domain/category.repository';
 import { CategoryOutput } from '../common/category-output';
 
-export class GetCategoryUsecase
+export class GetCategoryUseCase
   implements IUseCase<GetCategoryInput, GetCategoryOutput>
 {
   constructor(private readonly categoryRepo: ICategoryRepository) {}

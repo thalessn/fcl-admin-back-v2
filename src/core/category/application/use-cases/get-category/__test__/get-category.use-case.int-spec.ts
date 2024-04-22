@@ -3,17 +3,17 @@ import { CategorySequelizeRepository } from '../../../../infra/db/sequelize/cate
 import { CategoryModel } from '../../../../infra/db/sequelize/category.model';
 import { setupSequelize } from '../../../../../shared/infra/testing/helpers';
 import { Category, CategoryId } from '../../../../domain/category.aggregate';
-import { GetCategoryUsecase } from '../get-category.use-case';
+import { GetCategoryUseCase } from '../get-category.use-case';
 
 describe('Get Category Use Case Integration Tests', () => {
   let repository: CategorySequelizeRepository;
-  let usecase: GetCategoryUsecase;
+  let usecase: GetCategoryUseCase;
 
   setupSequelize({ models: [CategoryModel] });
 
   beforeEach(() => {
     repository = new CategorySequelizeRepository(CategoryModel);
-    usecase = new GetCategoryUsecase(repository);
+    usecase = new GetCategoryUseCase(repository);
   });
 
   it('should throw a error when category not found', async () => {

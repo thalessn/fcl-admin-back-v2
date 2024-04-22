@@ -2,15 +2,15 @@ import { NotFoundError } from '../../../../../shared/domain/errors/not-found.err
 import { InvalidUuidError } from '../../../../../shared/domain/value-objects/uuid.vo';
 import { Category, CategoryId } from '../../../../domain/category.aggregate';
 import { CategoryInMemoryRepository } from '../../../../infra/db/in-memory/category-in-memory.repository';
-import { GetCategoryUsecase } from '../get-category.use-case';
+import { GetCategoryUseCase } from '../get-category.use-case';
 
 describe('Get Category Use Case Unit Test', () => {
   let repository: CategoryInMemoryRepository;
-  let usecase: GetCategoryUsecase;
+  let usecase: GetCategoryUseCase;
 
   beforeEach(() => {
     repository = new CategoryInMemoryRepository();
-    usecase = new GetCategoryUsecase(repository);
+    usecase = new GetCategoryUseCase(repository);
   });
 
   it('should throw an error when entity not found', async () => {
