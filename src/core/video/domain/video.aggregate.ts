@@ -9,6 +9,9 @@ import { Thumbnail } from './thumbnail.vo';
 import { Trailer } from './trailer.vo';
 import { VideoMedia } from './video-media.vo';
 import VideoValidatorFactory from './video.validator';
+import { ThumbnailHalf } from './thumbnail-half.vo';
+import { AudioVideoMediaStatus } from '../../shared/domain/value-objects/audio-video-media.vo';
+import { VideoFakeBuilder } from './video-fake.builder';
 
 export type VideoConstructorProps = {
   video_id?: VideoId;
@@ -22,7 +25,7 @@ export type VideoConstructorProps = {
 
   banner?: Banner;
   thumbnail?: Thumbnail;
-  thumbnail_half?: Thumbnail;
+  thumbnail_half?: ThumbnailHalf;
   trailer?: Trailer;
   video?: VideoMedia;
 
@@ -42,7 +45,7 @@ export type VideoCreateCommand = {
 
   banner?: Banner;
   thumbnail?: Thumbnail;
-  thumbnail_half?: Thumbnail;
+  thumbnail_half?: ThumbnailHalf;
   trailer?: Trailer;
   video?: VideoMedia;
 
@@ -65,7 +68,7 @@ export class Video extends AggregateRoot {
 
   banner: Banner | null;
   thumbnail: Thumbnail | null;
-  thumbnail_half: Thumbnail | null;
+  thumbnail_half: ThumbnailHalf | null;
   trailer: Trailer | null;
   video: VideoMedia | null;
 
@@ -107,6 +110,7 @@ export class Video extends AggregateRoot {
       is_published: false,
     });
     video.validate(['title']);
+    video.markAsPublished();
 
     return video;
   }
@@ -138,6 +142,39 @@ export class Video extends AggregateRoot {
 
   markAsNotOpened(): void {
     this.is_opened = false;
+  }
+
+  replaceBanner(banner: Banner): void {
+    this.banner = banner;
+  }
+
+  replaceThumbnail(thumbnail: Thumbnail): void {
+    this.thumbnail = thumbnail;
+  }
+
+  replaceThumbnailHalf(thumbnailHalf: ThumbnailHalf): void {
+    this.thumbnail_half = thumbnailHalf;
+  }
+
+  replaceTrailer(trailer: Trailer): void {
+    this.trailer = trailer;
+    this.markAsPublished();
+  }
+
+  replaceVideo(video: VideoMedia): void {
+    this.video = video;
+    this.markAsPublished();
+  }
+
+  private markAsPublished() {
+    if (
+      this.trailer &&
+      this.video &&
+      this.trailer.status === AudioVideoMediaStatus.COMPLETED &&
+      this.video.status === AudioVideoMediaStatus.COMPLETED
+    ) {
+      this.is_published = true;
+    }
   }
 
   addCategoryId(categoryId: CategoryId): void {
@@ -191,9 +228,9 @@ export class Video extends AggregateRoot {
     return validator.validate(this.notification, this, fields);
   }
 
-  //   static fake() {
-  //     return VideoFakeBuilder;
-  //   }
+  static fake() {
+    return VideoFakeBuilder;
+  }
 
   get entity_id() {
     return this.video_id;
