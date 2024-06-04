@@ -12,6 +12,8 @@ import VideoValidatorFactory from './video.validator';
 import { ThumbnailHalf } from './thumbnail-half.vo';
 import { AudioVideoMediaStatus } from '../../shared/domain/value-objects/audio-video-media.vo';
 import { VideoFakeBuilder } from './video-fake.builder';
+import { VideoAudioMediaReplaced } from '../domain-events/video-audio-media-replace.event';
+import { VideoCreatedEvent } from '../domain-events/video-created.event';
 
 export type VideoConstructorProps = {
   video_id?: VideoId;
@@ -99,6 +101,15 @@ export class Video extends AggregateRoot {
     this.genres_id = props.genres_id;
     this.cast_members_id = props.cast_members_id;
     this.created_at = props.created_at ?? new Date();
+
+    this.registerHandler(
+      VideoCreatedEvent.name,
+      this.onVideoCreated.bind(this),
+    );
+    this.registerHandler(
+      VideoAudioMediaReplaced.name,
+      this.onAudioVideoMediaReplaced.bind(this),
+    );
   }
 
   static create(props: VideoCreateCommand) {
@@ -110,7 +121,7 @@ export class Video extends AggregateRoot {
       is_published: false,
     });
     video.validate(['title']);
-    video.markAsPublished();
+    video.tryMarkAsPublished();
 
     return video;
   }
@@ -158,23 +169,24 @@ export class Video extends AggregateRoot {
 
   replaceTrailer(trailer: Trailer): void {
     this.trailer = trailer;
-    this.markAsPublished();
+    this.applyEvent(
+      new VideoAudioMediaReplaced({
+        aggregate_id: this.video_id,
+        media: trailer,
+        media_type: 'trailer',
+      }),
+    );
   }
 
   replaceVideo(video: VideoMedia): void {
     this.video = video;
-    this.markAsPublished();
-  }
-
-  private markAsPublished() {
-    if (
-      this.trailer &&
-      this.video &&
-      this.trailer.status === AudioVideoMediaStatus.COMPLETED &&
-      this.video.status === AudioVideoMediaStatus.COMPLETED
-    ) {
-      this.is_published = true;
-    }
+    this.applyEvent(
+      new VideoAudioMediaReplaced({
+        aggregate_id: this.video_id,
+        media: video,
+        media_type: 'video',
+      }),
+    );
   }
 
   addCategoryId(categoryId: CategoryId): void {
@@ -221,6 +233,35 @@ export class Video extends AggregateRoot {
       throw new Error('Cast Members id is empty');
     }
     this.cast_members_id = new Map(castMembersId.map((id) => [id.id, id]));
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  onVideoCreated(event: VideoCreatedEvent) {
+    if (this.is_published) {
+      return;
+    }
+
+    this.tryMarkAsPublished();
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  onAudioVideoMediaReplaced(event: VideoAudioMediaReplaced) {
+    if (this.is_published) {
+      return;
+    }
+
+    this.tryMarkAsPublished();
+  }
+
+  private tryMarkAsPublished() {
+    if (
+      this.trailer &&
+      this.video &&
+      this.trailer.status === AudioVideoMediaStatus.COMPLETED &&
+      this.video.status === AudioVideoMediaStatus.COMPLETED
+    ) {
+      this.is_published = true;
+    }
   }
 
   validate(fields?: string[]) {
