@@ -1,7 +1,7 @@
-import { IDomainEvent } from '../../shared/domain/events/domain-event.interface';
-import { VideoId } from '../domain/video.aggregate';
-import { VideoMedia } from '../domain/video-media.vo';
-import { Trailer } from '../domain/trailer.vo';
+import { IDomainEvent } from '../../../shared/domain/events/domain-event.interface';
+import { VideoId } from '../video.aggregate';
+import { VideoMedia } from '../video-media.vo';
+import { Trailer } from '../trailer.vo';
 
 type VideoAudioMediaReplacedProps = {
   aggregate_id: VideoId;

@@ -12,8 +12,8 @@ import VideoValidatorFactory from './video.validator';
 import { ThumbnailHalf } from './thumbnail-half.vo';
 import { AudioVideoMediaStatus } from '../../shared/domain/value-objects/audio-video-media.vo';
 import { VideoFakeBuilder } from './video-fake.builder';
-import { VideoAudioMediaReplaced } from '../domain-events/video-audio-media-replace.event';
-import { VideoCreatedEvent } from '../domain-events/video-created.event';
+import { VideoCreatedEvent } from './domain-events/video-created.event';
+import { VideoAudioMediaReplaced } from './domain-events/video-audio-media-replaced.event';
 
 export type VideoConstructorProps = {
   video_id?: VideoId;
@@ -25,11 +25,11 @@ export type VideoConstructorProps = {
   is_opened: boolean;
   is_published: boolean;
 
-  banner?: Banner;
-  thumbnail?: Thumbnail;
-  thumbnail_half?: ThumbnailHalf;
-  trailer?: Trailer;
-  video?: VideoMedia;
+  banner?: Banner | null;
+  thumbnail?: Thumbnail | null;
+  thumbnail_half?: ThumbnailHalf | null;
+  trailer?: Trailer | null;
+  video?: VideoMedia | null;
 
   categories_id: Map<string, CategoryId>;
   genres_id: Map<string, GenreId>;
@@ -121,8 +121,27 @@ export class Video extends AggregateRoot {
       is_published: false,
     });
     video.validate(['title']);
-    video.tryMarkAsPublished();
-
+    video.applyEvent(
+      new VideoCreatedEvent({
+        video_id: video.video_id,
+        title: video.title,
+        description: video.description,
+        year_launched: video.year_launched,
+        duration: video.duration,
+        rating: video.rating,
+        is_opened: video.is_opened,
+        is_published: video.is_published,
+        banner: video.banner,
+        thumbnail: video.thumbnail,
+        thumbnail_half: video.thumbnail_half,
+        trailer: video.trailer,
+        video: video.video,
+        categories_id: Array.from(video.categories_id.values()),
+        genres_id: Array.from(video.genres_id.values()),
+        cast_members_id: Array.from(video.cast_members_id.values()),
+        created_at: video.created_at,
+      }),
+    );
     return video;
   }
 
@@ -236,7 +255,7 @@ export class Video extends AggregateRoot {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  onVideoCreated(event: VideoCreatedEvent) {
+  onVideoCreated(_event: VideoCreatedEvent) {
     if (this.is_published) {
       return;
     }
@@ -245,7 +264,7 @@ export class Video extends AggregateRoot {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  onAudioVideoMediaReplaced(event: VideoAudioMediaReplaced) {
+  onAudioVideoMediaReplaced(_event: VideoAudioMediaReplaced) {
     if (this.is_published) {
       return;
     }

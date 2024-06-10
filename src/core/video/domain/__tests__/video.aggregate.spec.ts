@@ -242,8 +242,8 @@ describe('Video Unit Tests', () => {
       );
       expect(video.created_at).toBeInstanceOf(Date);
       expect(video.is_published).toBeTruthy();
-      expect(spyOnVideCreated).toHaveBeenCalledTimes(1);
       expect(tryMarkAsPublished).toHaveBeenCalledTimes(1);
+      expect(spyOnVideCreated).toHaveBeenCalledTimes(1);
     });
   });
 

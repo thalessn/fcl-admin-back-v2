@@ -1,14 +1,14 @@
-import { CastMemberId } from '../../cast-member/domain/cast-member.aggregate';
-import { CategoryId } from '../../category/domain/category.aggregate';
-import { GenreId } from '../../genre/domain/genre.aggregate';
-import { IDomainEvent } from '../../shared/domain/events/domain-event.interface';
-import { Banner } from '../domain/banner.vo';
-import { Rating } from '../domain/rating.vo';
-import { ThumbnailHalf } from '../domain/thumbnail-half.vo';
-import { Thumbnail } from '../domain/thumbnail.vo';
-import { Trailer } from '../domain/trailer.vo';
-import { VideoMedia } from '../domain/video-media.vo';
-import { VideoId } from '../domain/video.aggregate';
+import { CastMemberId } from '../../../cast-member/domain/cast-member.aggregate';
+import { CategoryId } from '../../../category/domain/category.aggregate';
+import { GenreId } from '../../../genre/domain/genre.aggregate';
+import { IDomainEvent } from '../../../shared/domain/events/domain-event.interface';
+import { Banner } from '../banner.vo';
+import { Rating } from '../rating.vo';
+import { ThumbnailHalf } from '../thumbnail-half.vo';
+import { Thumbnail } from '../thumbnail.vo';
+import { Trailer } from '../trailer.vo';
+import { VideoMedia } from '../video-media.vo';
+import { VideoId } from '../video.aggregate';
 
 export type VideoCreatedEventProps = {
   video_id: VideoId;
